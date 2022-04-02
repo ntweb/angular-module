@@ -1,0 +1,9 @@
+<div class="card" *ngIf="book">
+    <img src="{{ book.image }}" class="card-img-top" />
+    <div class="card-body">
+        <h5 class="card-title text-truncate">{{ book.title }}</h5>
+        <p class="card-text text-truncate">{{ book.description }}</p>
+        <p class="card-text">{{ book.price }} &euro;</p>
+    </div>
+</div>
+
