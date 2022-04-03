@@ -27,5 +27,10 @@ export const loginReducer = createReducer(
         return {
             user: action.user
         }
+    }),
+    on(LoginActions.logout, (state, action) => {
+        return {
+            user: undefined
+        }
     })
 )

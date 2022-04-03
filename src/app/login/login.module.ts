@@ -5,6 +5,8 @@ import { LoginRoutingModule } from './login-routing.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromLogin from './reducers';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { LoginEffect } from './login.effects';
 
 
 
@@ -17,7 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule,
         LoginRoutingModule,
-        StoreModule.forFeature(fromLogin.loginFeatureKey, fromLogin.loginReducer, { metaReducers: fromLogin.metaReducers })
+        StoreModule.forFeature(fromLogin.loginFeatureKey, fromLogin.loginReducer, { metaReducers: fromLogin.metaReducers }),
+        EffectsModule.forFeature([LoginEffect])
+    ],
+    exports: [
+        LoginComponent
     ]
 })
 export class LoginModule { }

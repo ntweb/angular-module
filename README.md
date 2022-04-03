@@ -8,6 +8,8 @@ Installare il pacchetto `npm install @ngrx/store --save`
 
 Eseguire opzionalmente `ng add @ngrx/store-devtools` se si vuole utilizzare il ReduxDev Tool di Chrome.
 
+Se servono gli effects installare `npm install @ngrx/effects --save`
+
 ## Aggiornare app.module.ts
 Iserire in questo esatto ordine:
 
