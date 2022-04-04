@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import * as fromAppState from './reducers';
 import { EffectsModule } from '@ngrx/effects';
+import {LoginModule} from "./login/login.module";
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
+        LoginModule.forRoot(),
         StoreModule.forRoot(fromAppState.reducers, { metaReducers: fromAppState.metaReducers }),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),

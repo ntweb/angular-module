@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { LoginRoutingModule } from './login-routing.module';
@@ -21,9 +21,12 @@ import { LoginEffect } from './login.effects';
         LoginRoutingModule,
         StoreModule.forFeature(fromLogin.loginFeatureKey, fromLogin.loginReducer, { metaReducers: fromLogin.metaReducers }),
         EffectsModule.forFeature([LoginEffect])
-    ],
-    exports: [
-        LoginComponent
     ]
 })
-export class LoginModule { }
+export class LoginModule {
+    static forRoot() : ModuleWithProviders<LoginModule> {
+        return {
+            ngModule: LoginModule
+        }
+    }
+}

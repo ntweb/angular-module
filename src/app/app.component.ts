@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from './reducers';
 import { map, Observable } from 'rxjs';
 import { isLoggedIn, isLoggedOut } from './login/login.selectors';
-import { logout } from './login/login.actions';
+import {login, logout} from './login/login.actions';
 
 @Component({
     selector: 'app-root',
@@ -22,6 +22,12 @@ export class AppComponent implements OnInit{
     }
 
     ngOnInit(): void {
+
+        const userProfile = localStorage.getItem("user");
+        if (userProfile) {
+            this.store.dispatch(login({user: JSON.parse(userProfile)}))
+        }
+
         /**
          *  questo è il modo classico di interrogare lo store
          *  ma non è ottimizzato perchè ad ogni cambiamento dello store
