@@ -23,10 +23,4 @@ import { LoginEffect } from './login.effects';
         EffectsModule.forFeature([LoginEffect])
     ]
 })
-export class LoginModule {
-    static forRoot() : ModuleWithProviders<LoginModule> {
-        return {
-            ngModule: LoginModule
-        }
-    }
-}
+export class LoginModule { }

@@ -20,7 +20,7 @@ import {LoginModule} from "./login/login.module";
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        LoginModule.forRoot(),
+        LoginModule,
         StoreModule.forRoot(fromAppState.reducers, { metaReducers: fromAppState.metaReducers }),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),
