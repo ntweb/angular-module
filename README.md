@@ -2,21 +2,26 @@
 
 Boilerplate
 
+### Premessa
+
+questo modulo con l'aiuto di Redux DevTools serve
+per avere far cambiare l'interfaccia al cambiamento della
+timeline di Redux DevTools
+
 ### Installazione
 
-Installare il pacchetto `npm install @ngrx/store --save`
+Installare il pacchetto `npm install @ngrx/router-store --save`
 
-Eseguire opzionalmente `ng add @ngrx/store-devtools` se si vuole utilizzare il ReduxDev Tool di Chrome.
-
-Se servono gli effects installare `npm install @ngrx/effects --save`
 
 ## Aggiornare app.module.ts
 Iserire in questo esatto ordine:
 
     imports: [
         ...
-        StoreModule.forRoot({}),
-        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+        StoreRouterConnectingModule.forRoot({
+            stateKey: 'router',
+            routerState: RouterState.Minimal
+        })
         ...
     ]
 
