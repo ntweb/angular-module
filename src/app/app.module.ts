@@ -12,6 +12,7 @@ import * as fromAppState from './reducers';
 import {EffectsModule} from '@ngrx/effects';
 import {LoginModule} from "./login/login.module";
 import {RouterState, StoreRouterConnectingModule} from "@ngrx/router-store";
+import {CoursesModule} from "./courses/courses.module";
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import {RouterState, StoreRouterConnectingModule} from "@ngrx/router-store";
         AppRoutingModule,
         HttpClientModule,
         LoginModule,
+        CoursesModule,
         StoreModule.forRoot(fromAppState.reducers, { metaReducers: fromAppState.metaReducers }),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),
