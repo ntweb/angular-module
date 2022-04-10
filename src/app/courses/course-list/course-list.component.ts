@@ -2,6 +2,9 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { concat, concatMap, debounceTime, distinctUntilChanged, fromEvent, map, Observable, shareReplay } from 'rxjs';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/Book';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../../reducers';
+import { selectBeginnerBooks } from '../courses.selectors';
 
 @Component({
     selector: 'app-course-list',
@@ -14,7 +17,7 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
     books$!: Observable<any>;
 
-    constructor(private bs: BookService) { }
+    constructor(private store: Store<AppState>) { }
 
     ngOnInit(): void {
     }
@@ -22,6 +25,7 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         const initialBooks$ = this.doFilter();
 
+        /*
         const searchBooks$: Observable<Book[]> = fromEvent(
             this.filter.nativeElement,
             'keyup'
@@ -32,12 +36,14 @@ export class CourseListComponent implements OnInit, AfterViewInit {
             concatMap((search) => this.bs.getBooks(search)),
             shareReplay() // questo evita di eseguire le chiamate 2 volte avendo 2 " | async " nel templte
         );
+         */
 
-        this.books$ = concat(initialBooks$, searchBooks$);
+        // this.books$ = concat(initialBooks$, searchBooks$);
+        this.books$ = concat(initialBooks$);
     }
 
     doFilter(search: string = ''): Observable<Book[]> {
-        return this.bs.getBooks(search);
+        return this.store.pipe(select(selectBeginnerBooks));
     }
 
 }

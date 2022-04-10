@@ -14,7 +14,7 @@ export class CoursesEffects {
             ofType(CourseActions.loadAllCourses),
             concatMap(action => this.bs.getBooks()),
             map(books => {
-                console.log('books', books);
+                // console.log('books', books);
                 return allCoursesLoaded({books});
             })
         )
