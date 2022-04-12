@@ -1,4 +1,4 @@
-<div class="card" *ngIf="book">
+<div class="card" *ngIf="book" (click)="onBookSelectedHandler()">
     <img src="{{ book.image }}" class="card-img-top" />
     <div class="card-body">
         <h5 class="card-title text-truncate">{{ book.title }}</h5>

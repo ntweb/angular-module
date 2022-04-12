@@ -5,6 +5,7 @@ import { Book } from '../models/Book';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { selectBeginnerBooks } from '../courses.selectors';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-course-list',
@@ -15,14 +16,21 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
     @ViewChild('filter') filter!: ElementRef;
 
-    books$!: Observable<any>;
+    selectedBook: Book | undefined;
 
-    constructor(private store: Store<AppState>) { }
+    books$!: Observable<Book[]>;
 
-    ngOnInit(): void {
+    form: FormGroup;
+
+    constructor(private store: Store<AppState>, private fb: FormBuilder) {
+        this.form = fb.group({
+            title: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            price: [0, [Validators.required]],
+        })
     }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         const initialBooks$ = this.doFilter();
 
         /*
@@ -42,8 +50,21 @@ export class CourseListComponent implements OnInit, AfterViewInit {
         this.books$ = concat(initialBooks$);
     }
 
+    ngAfterViewInit(): void {
+    }
+
     doFilter(search: string = ''): Observable<Book[]> {
         return this.store.pipe(select(selectBeginnerBooks));
     }
 
+    onBookSelected(book: Book) {
+        this.selectedBook = book;
+        this.form.patchValue({
+            ...this.selectedBook
+        })
+    }
+
+    save() {
+        console.log({...this.form.value});
+    }
 }

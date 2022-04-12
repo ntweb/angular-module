@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Book } from '../models/Book';
 
 @Component({
@@ -10,9 +10,15 @@ export class CourseComponent implements OnInit {
 
     @Input() book: Book | undefined;
 
+    @Output() onBookSelected: EventEmitter<Book> = new EventEmitter<Book>();
+
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    onBookSelectedHandler() {
+        this.onBookSelected.emit(this.book);
     }
 
 }

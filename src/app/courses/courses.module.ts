@@ -7,6 +7,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {CoursesEffects} from "./courses.effects";
 import {StoreModule} from "@ngrx/store";
 import * as fromCourses from './reducers';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import * as fromCourses from './reducers';
         CommonModule,
         CoursesRoutingModule,
         StoreModule.forFeature(fromCourses.bookReducerFeatureKey, fromCourses.reducer),
-        EffectsModule.forFeature([CoursesEffects])
+        EffectsModule.forFeature([CoursesEffects]),
+        ReactiveFormsModule
     ]
 })
 export class CoursesModule { }

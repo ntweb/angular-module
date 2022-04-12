@@ -6,7 +6,29 @@
     </div>
     <div class="row" *ngIf="books$ | async">
         <div class="col-sm-4 p-2" *ngFor="let book of books$ | async">
-            <app-course [book]="book"></app-course>
+            <app-course [book]="book" (onBookSelected)="onBookSelected($event)"></app-course>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="selectedBook">
+    <div class="row">
+        <div class="col-4">
+            <form [formGroup]="form">
+                <div class="mb-3">
+                    <label class="form-label">Titolo</label>
+                    <input type="text" class="form-control" placeholder="Titolo" formControlName="title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descrizione</label>
+                    <input type="text" class="form-control" placeholder="Descrizione" formControlName="description">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Prezzo</label>
+                    <input type="text" class="form-control" formControlName="price">
+                </div>
+                <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!form.valid">Submit</button>
+            </form>
         </div>
     </div>
 </div>

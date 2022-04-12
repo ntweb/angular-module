@@ -1,8 +1,8 @@
 export interface Book {
-    createdAt: Date;
+    createdAt?: Date;
     title: string;
     description: string;
-    image: string;
+    image?: string;
     price: number;
     id: number;
 }
