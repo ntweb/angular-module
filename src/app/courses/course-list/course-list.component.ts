@@ -8,6 +8,7 @@ import { selectAdvancedBooks, selectBeginnerBooks } from '../courses.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Update } from '@ngrx/entity';
 import { courseUpdated, courseUpdatedWithError } from '../course.actions';
+import { BookEntityService } from '../services/book-entity.service';
 
 @Component({
     selector: 'app-course-list',
@@ -25,12 +26,17 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
     form: FormGroup;
 
-    constructor(private store: Store<AppState>, private fb: FormBuilder) {
+    constructor(
+        private store: Store<AppState>,
+        private fb: FormBuilder,
+        private bes: BookEntityService) {
+
         this.form = fb.group({
             title: ['', [Validators.required]],
             description: ['', [Validators.required]],
             price: [0, [Validators.required]],
-        })
+        });
+
     }
 
     ngOnInit(): void {

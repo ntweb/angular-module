@@ -8,6 +8,12 @@ import {CoursesEffects} from "./courses.effects";
 import {StoreModule} from "@ngrx/store";
 import * as fromCourses from './reducers';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+
+const entityMetadata: EntityMetadataMap = {
+    Book: {
+    }
+};
 
 @NgModule({
     declarations: [
@@ -22,4 +28,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule
     ]
 })
-export class CoursesModule { }
+export class CoursesModule {
+
+    constructor(private eds: EntityDefinitionService) {
+        this.eds.registerMetadataMap(entityMetadata);
+    }
+}

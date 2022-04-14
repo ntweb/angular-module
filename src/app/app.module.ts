@@ -13,6 +13,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {LoginModule} from "./login/login.module";
 import {RouterState, StoreRouterConnectingModule} from "@ngrx/router-store";
 import {CoursesModule} from "./courses/courses.module";
+import { EntityDataModule } from '@ngrx/data';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {CoursesModule} from "./courses/courses.module";
         StoreModule.forRoot(fromAppState.reducers, { metaReducers: fromAppState.metaReducers }),
         StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
         EffectsModule.forRoot([]),
+        EntityDataModule.forRoot({}),
         StoreRouterConnectingModule.forRoot({
             stateKey: 'router',
             routerState: RouterState.Minimal
