@@ -26,6 +26,12 @@ export const reducer = createReducer(
             return adapter.setAll(action.books, state);
             /* return { ...state, books: action.books } */
         }
+    ),
+
+    on(CourseActions.courseUpdated,
+        (state, action) => {
+            return adapter.updateOne(action.update, state);
+        }
     )
 );
 

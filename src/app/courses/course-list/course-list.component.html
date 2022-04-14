@@ -4,8 +4,15 @@
             <input type="text" class="form-control" placeholder="Filtra" #filter />
         </div>
     </div>
-    <div class="row" *ngIf="books$ | async">
-        <div class="col-sm-4 p-2" *ngFor="let book of books$ | async">
+    <div class="row mt-2" *ngIf="books$ | async">
+        <div class="col-12"><h2>Beginner courses</h2></div>
+        <div class="col-sm-2 p-2" *ngFor="let book of books$ | async">
+            <app-course [book]="book" (onBookSelected)="onBookSelected($event)"></app-course>
+        </div>
+    </div>
+    <div class="row mt-2" *ngIf="booksAdvanced$ | async">
+        <div class="col-12"><h2>Advanced courses</h2></div>
+        <div class="col-sm-2 p-2" *ngFor="let book of booksAdvanced$ | async">
             <app-course [book]="book" (onBookSelected)="onBookSelected($event)"></app-course>
         </div>
     </div>
@@ -27,7 +34,8 @@
                     <label class="form-label">Prezzo</label>
                     <input type="text" class="form-control" formControlName="price">
                 </div>
-                <button type="button" class="btn btn-primary" (click)="save()" [disabled]="!form.valid">Submit</button>
+                <button type="button" class="btn btn-primary me-1" (click)="save()" [disabled]="!form.valid">Submit</button>
+                <button type="button" class="btn btn-primary" (click)="saveWithError()" [disabled]="!form.valid">Submit with error and rollback</button>
             </form>
         </div>
     </div>

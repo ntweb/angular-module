@@ -4,8 +4,10 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/Book';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { selectBeginnerBooks } from '../courses.selectors';
+import { selectAdvancedBooks, selectBeginnerBooks } from '../courses.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Update } from '@ngrx/entity';
+import { courseUpdated, courseUpdatedWithError } from '../course.actions';
 
 @Component({
     selector: 'app-course-list',
@@ -19,6 +21,7 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     selectedBook: Book | undefined;
 
     books$!: Observable<Book[]>;
+    booksAdvanced$!: Observable<Book[]>;
 
     form: FormGroup;
 
@@ -32,6 +35,7 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         const initialBooks$ = this.doFilter();
+        this.booksAdvanced$ = this.store.pipe(select(selectAdvancedBooks));
 
         /*
         const searchBooks$: Observable<Book[]> = fromEvent(
@@ -65,6 +69,28 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     }
 
     save() {
-        console.log({...this.form.value});
+        if (this.selectedBook) {
+            const changes = {...this.form.value};
+            const update: Update<Book> = {
+                id: this.selectedBook.id,
+                changes: changes
+            }
+            this.store.dispatch(courseUpdated({update}))
+
+            this.selectedBook = undefined;
+        }
+    }
+
+    saveWithError() {
+        if (this.selectedBook) {
+            const changes = {...this.form.value};
+            const update: Update<Book> = {
+                id: 9999999999999,
+                changes: changes
+            }
+            this.store.dispatch(courseUpdatedWithError({update}))
+
+            this.selectedBook = undefined;
+        }
     }
 }
