@@ -6,8 +6,7 @@ import { Book } from '../models/Book';
   providedIn: 'root'
 })
 export class BookEntityService extends EntityCollectionServiceBase<Book> {
-
   constructor(serviceElementFactory: EntityCollectionServiceElementsFactory) {
-      super('Course', serviceElementFactory);
+      super('Book', serviceElementFactory);
   }
 }

@@ -1,5 +1,15 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { concat, concatMap, debounceTime, distinctUntilChanged, fromEvent, map, Observable, shareReplay } from 'rxjs';
+import {
+    catchError,
+    concat,
+    concatMap,
+    debounceTime,
+    distinctUntilChanged, finalize,
+    fromEvent,
+    map, noop,
+    Observable, of,
+    shareReplay
+} from 'rxjs';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/Book';
 import { select, Store } from '@ngrx/store';
@@ -40,31 +50,19 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        const initialBooks$ = this.doFilter();
-        this.booksAdvanced$ = this.store.pipe(select(selectAdvancedBooks));
+        this.bes.getAll().subscribe();
 
-        /*
-        const searchBooks$: Observable<Book[]> = fromEvent(
-            this.filter.nativeElement,
-            'keyup'
-        ).pipe(
-            debounceTime(500),
-            map((e: any) => e.target.value),
-            distinctUntilChanged(),
-            concatMap((search) => this.bs.getBooks(search)),
-            shareReplay() // questo evita di eseguire le chiamate 2 volte avendo 2 " | async " nel templte
+        this.books$ = this.bes.entities$.pipe(
+            map(books => books.filter(book => book.title.includes('Rus')))
         );
-         */
 
-        // this.books$ = concat(initialBooks$, searchBooks$);
-        this.books$ = concat(initialBooks$);
+        this.booksAdvanced$ = this.bes.entities$.pipe(
+            map(books => books.filter(book => book.title.includes('Sleek')))
+        );
+
     }
 
     ngAfterViewInit(): void {
-    }
-
-    doFilter(search: string = ''): Observable<Book[]> {
-        return this.store.pipe(select(selectBeginnerBooks));
     }
 
     onBookSelected(book: Book) {
@@ -75,13 +73,10 @@ export class CourseListComponent implements OnInit, AfterViewInit {
     }
 
     save() {
-        if (this.selectedBook) {
-            const changes = {...this.form.value};
-            const update: Update<Book> = {
-                id: this.selectedBook.id,
-                changes: changes
-            }
-            this.store.dispatch(courseUpdated({update}))
+        if (this.selectedBook) {0
+            const changes = {...this.selectedBook, ...this.form.value};
+
+            this.bes.update(changes)
 
             this.selectedBook = undefined;
         }
@@ -89,12 +84,12 @@ export class CourseListComponent implements OnInit, AfterViewInit {
 
     saveWithError() {
         if (this.selectedBook) {
-            const changes = {...this.form.value};
-            const update: Update<Book> = {
-                id: 9999999999999,
-                changes: changes
-            }
-            this.store.dispatch(courseUpdatedWithError({update}))
+            const changes = {...this.selectedBook, ...this.form.value, id: 99999999999999};
+
+            this.bes.update(changes).pipe(
+                catchError(error => { alert('error'); return of([])}),
+                finalize(() => alert('finished'))
+            );
 
             this.selectedBook = undefined;
         }

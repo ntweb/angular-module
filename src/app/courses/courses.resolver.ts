@@ -18,7 +18,7 @@ export class CoursesResolver implements Resolve<any>{
             tap(() => {
                 if (!this.loading) {
                     this.loading = true;
-                    this.store.dispatch(loadAllCourses())
+                    // this.store.dispatch(loadAllCourses())
                 }
             }),
             first(),

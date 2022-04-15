@@ -8,7 +8,14 @@ import {CoursesEffects} from "./courses.effects";
 import {StoreModule} from "@ngrx/store";
 import * as fromCourses from './reducers';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import {
+    DefaultDataService,
+    EntityDataModule,
+    EntityDataService,
+    EntityDefinitionService,
+    EntityMetadataMap
+} from '@ngrx/data';
+import { BookDataService } from './services/book-data.service';
 
 const entityMetadata: EntityMetadataMap = {
     Book: {
@@ -30,7 +37,12 @@ const entityMetadata: EntityMetadataMap = {
 })
 export class CoursesModule {
 
-    constructor(private eds: EntityDefinitionService) {
+    constructor(
+        private eds: EntityDefinitionService,
+        private entityDataService: EntityDataService,
+        private bds: BookDataService) {
         this.eds.registerMetadataMap(entityMetadata);
+
+        entityDataService.registerService('Book', bds);
     }
 }

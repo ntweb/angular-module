@@ -18,6 +18,7 @@ export class BookService {
     }
 
     updateBook(id: number, book: Partial<Book>): Observable<Book> {
+        console.log()
         return this.http.put<Book>(`${this.url}/${id}`, book);
     }
 }
